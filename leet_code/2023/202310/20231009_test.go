@@ -25,6 +25,7 @@ func splitNum(num int) int {
 	})
 	num1, num2 := 0, 0
 	for i := 0; i < len(strNum); i++ {
+		fmt.Println(strNum[i] - '0')
 		if i%2 == 0 {
 			num1 = num1*10 + int(strNum[i]-'0')
 		} else {
