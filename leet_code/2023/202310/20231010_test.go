@@ -34,10 +34,11 @@ func sumDistance(nums []int, s string, d int) int {
 	res := 0
 	for i := 1; i < n; i++ {
 		res += (pos[i] - pos[i-1]) * i % mod * (n - i) % mod
+		fmt.Println("res:", res, i, n)
 		res %= mod
-		//res += int(math.Abs(float64(pos[i] - pos[i-1])))
+		//res += pos[i-1]
 	}
-	return res * n
+	return res
 }
 
 func TestSumDistance(t *testing.T) {
