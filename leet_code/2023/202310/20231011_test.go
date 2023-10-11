@@ -9,37 +9,30 @@ import (
 
 func topStudents(positiveFeedback []string, negativeFeedback []string, report []string, studentId []int, k int) []int {
 	var (
-		positiveFeedbackHashMap = make(map[string]struct{}, len(positiveFeedback))
-		negativeFeedbackHashMap = make(map[string]struct{}, len(negativeFeedback))
-		res                     []int
+		feedbackWords = map[string]int{}
+		res           []int
 	)
 
 	for _, val := range positiveFeedback {
-		positiveFeedbackHashMap[val] = struct{}{}
+		feedbackWords[val] = 3
 	}
 	for _, val := range negativeFeedback {
-		negativeFeedbackHashMap[val] = struct{}{}
+		feedbackWords[val] = -1
 	}
 
 	type pair struct {
 		score, id int
 	}
 
-	var A = make([]pair, 0, len(report))
+	var A = make([]pair, len(report))
 	for index, val := range report {
-		tmp := strings.Split(val, " ")
 		count := 0
-		for _, data := range tmp {
-			if _, ok := positiveFeedbackHashMap[data]; ok {
-				count += 3
-			}
-			if _, ok := negativeFeedbackHashMap[data]; ok {
-				count -= 1
-			}
+		for _, data := range strings.Split(val, " ") {
+			count += feedbackWords[data]
 		}
-		A = append(A, pair{
+		A[index] = pair{
 			score: count, id: studentId[index],
-		})
+		}
 	}
 
 	sort.Slice(A, func(i, j int) bool {
