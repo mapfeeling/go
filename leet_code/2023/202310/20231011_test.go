@@ -20,17 +20,17 @@ func topStudents(positiveFeedback []string, negativeFeedback []string, report []
 		feedbackWords[val] = -1
 	}
 
-	type pair struct {
+	type Pair struct {
 		score, id int
 	}
 
-	var A = make([]pair, len(report))
+	var A = make([]Pair, len(report))
 	for index, val := range report {
 		count := 0
 		for _, data := range strings.Split(val, " ") {
 			count += feedbackWords[data]
 		}
-		A[index] = pair{
+		A[index] = Pair{
 			score: count, id: studentId[index],
 		}
 	}
