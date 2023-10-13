@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func findTheArrayConcVal(nums []int) int64 {
+func findTheArrayConcValMySelf(nums []int) int64 {
 	var res int
 	if len(nums) < 2 {
 		for _, val := range nums {
@@ -46,11 +46,25 @@ func findTheArrayConcVal(nums []int) int64 {
 	return int64(res)
 }
 
+func findTheArrayConcVal(nums []int) (ans int64) {
+	i, j := 0, len(nums)-1
+	for ; i < j; i, j = i+1, j-1 {
+		x, _ := strconv.Atoi(strconv.Itoa(nums[i]) + strconv.Itoa(nums[j]))
+		ans += int64(x)
+	}
+	if i == j {
+		ans += int64(nums[i])
+	}
+	return
+}
+
 func Test20231012(t *testing.T) {
 	var nums = []int{5, 14, 13, 8, 12}
 	var nums2 = []int{92, 14}
 	fmt.Println(findTheArrayConcVal(nums))
+	fmt.Println(findTheArrayConcValMySelf(nums))
 	fmt.Println(findTheArrayConcVal(nums2))
+	fmt.Println(findTheArrayConcValMySelf(nums2))
 }
 
 /*
