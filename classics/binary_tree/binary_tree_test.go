@@ -137,6 +137,26 @@ func IsCompleteBt(root *BinaryTree) bool {
 	return true
 }
 
+// LCA
+func lowestCommonAncestor(root, p, q *BinaryTree) *BinaryTree {
+	if root == nil || root == p || root == q {
+		return root
+	}
+
+	left := lowestCommonAncestor(root.LeftNode, p, q)
+	right := lowestCommonAncestor(root.RightNode, p, q)
+
+	if left != nil && right != nil {
+		return root
+	}
+
+	if left != nil {
+		return left
+	}
+
+	return right
+}
+
 func TestBinaryTree(t *testing.T) {
 	// 创建二叉树根节点
 	//根节点
@@ -173,5 +193,7 @@ func TestBinaryTree(t *testing.T) {
 	IsCompleteBt(root)
 	fmt.Println("------是否为完全二叉树:-------", IsNotCompleteBt)
 	fmt.Println("-------该二叉树的最大深度:--------", MaxDepthBinaryTree(root))
+	var p, q *BinaryTree
+	lowestCommonAncestor(root, p, q)
 
 }
