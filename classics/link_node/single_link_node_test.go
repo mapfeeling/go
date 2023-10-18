@@ -41,14 +41,45 @@ func fmtRangeLinkNode(head *LinkNode) {
 
 // 链表翻转
 func reverseLinkNode(head *LinkNode) *LinkNode {
-	var prev *LinkNode
-	for head != nil {
-		box := head.Next
-		head.Next = prev
-		prev = head
-		head = box
+	var (
+		prev *LinkNode
+		curr = head
+	)
+	for curr != nil {
+		next := curr.Next
+		curr.Next = prev
+		prev = curr
+		curr = next
 	}
 	return prev
+}
+
+// 链表区间反转
+// 1 ->[ -> 2 -> 3 -> 4 -> 5 -> ] -> 6        1 -> [ -> 5 -> 4 -> 3 -> 2 -> ] -> 6
+func reverseBetween(head *LinkNode, left, right int) *LinkNode {
+	if head == nil || head.Next == nil {
+		return head
+	}
+	//dummy := &LinkNode{Next: head}
+	//prev := dummy
+	prev := new(LinkNode)
+	cur := head
+	fmt.Println(cur.Val)
+	// 0 1 2 3 4 5 6
+	for i := 0; i < left; i++ {
+		prev = cur
+		cur = cur.Next
+		fmt.Println("cur.Val", cur.Val)
+	}
+
+	for i := 0; i < right-left-1; i++ {
+		next := cur.Next
+		fmt.Println()
+		cur.Next = next.Next
+		next.Next = prev.Next
+		prev.Next = next
+	}
+	return cur
 }
 
 // 链表插入
@@ -69,11 +100,28 @@ func insertLinkNode(node *LinkNode, val int) *LinkNode {
 }
 
 func TestLinkNode(t *testing.T) {
-	fmt.Println("----------链表初始化----------")
-	var linkNode = NewLinkNode()
-	fmtRangeLinkNode(linkNode)
-	fmt.Println("----------链表翻转----------")
-	fmtRangeLinkNode(reverseLinkNode(linkNode))
+	{
+		// 创建带头节点的链表
+		fmt.Println("----------创建带头节点的链表----------")
+		var head = new(LinkNode)
+		head.Next = NewLinkNode()
+		fmtRangeLinkNode(head)
+		fmt.Println("----------带头节点的链表翻转----------")
+		fmtRangeLinkNode(reverseLinkNode(head))
+		fmt.Println("----------带头节点的链表区间翻转----------")
+		fmtRangeLinkNode(reverseBetween(head, 2, 5))
+	}
+
+	{
+		// 创建不带头节点的链表
+		fmt.Println("----------创建不带头节点的链表----------")
+		var linkNode = NewLinkNode()
+		fmtRangeLinkNode(linkNode)
+		fmt.Println("----------不带头节点的链表翻转----------")
+		fmtRangeLinkNode(reverseLinkNode(linkNode))
+		fmt.Println("----------不带头节点的链表区间翻转----------")
+	}
+
 	fmt.Println("----------链表插入----------")
-	fmtRangeLinkNode(insertLinkNode(linkNode, 3))
+	//fmtRangeLinkNode(insertLinkNode(linkNode, 3))
 }

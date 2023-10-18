@@ -2,6 +2,7 @@ package binary_tree
 
 import (
 	"fmt"
+	"math"
 	"testing"
 )
 
@@ -157,6 +158,48 @@ func lowestCommonAncestor(root, p, q *BinaryTree) *BinaryTree {
 	return right
 }
 
+func dfsPathSum(root *BinaryTree, sum int, arr []int, ret *[][]int) {
+	if root == nil {
+		return
+	}
+	arr = append(arr, root.Value)
+	if root.Value == sum && root.LeftNode == nil && root.RightNode == nil {
+		box := make([]int, len(arr))
+		copy(box, arr)
+		*ret = append(*ret, box)
+	}
+	dfsPathSum(root.LeftNode, sum-root.Value, arr, ret)
+	dfsPathSum(root.RightNode, sum-root.Value, arr, ret)
+	arr = arr[:len(arr)-1]
+}
+
+// 二叉树中和为某一值的路径
+func pathSum(root *BinaryTree, sum int) [][]int {
+	if root == nil {
+		return nil
+	}
+	var ret [][]int
+	dfsPathSum(root, sum, []int{}, &ret)
+	return ret
+}
+
+func dfsMaxPathSum(root *BinaryTree, maxSum int) int {
+	if root == nil {
+		return 0
+	}
+	left := max(0, dfsMaxPathSum(root.LeftNode, maxSum))
+	right := max(0, dfsMaxPathSum(root.RightNode, maxSum))
+	maxSum = max(maxSum, root.Value+left+right)
+	return maxSum
+}
+
+// 二叉树最大路径之和
+func maxPathSum(root *BinaryTree) (maxSum int) {
+	maxSum = math.MinInt32
+	dfsMaxPathSum(root, maxSum)
+	return
+}
+
 func TestBinaryTree(t *testing.T) {
 	// 创建二叉树根节点
 	//根节点
@@ -195,5 +238,6 @@ func TestBinaryTree(t *testing.T) {
 	fmt.Println("-------该二叉树的最大深度:--------", MaxDepthBinaryTree(root))
 	var p, q *BinaryTree
 	lowestCommonAncestor(root, p, q)
+	fmt.Println("------二叉树中和为某一值的路径:-------", pathSum(root, 20))
 
 }
