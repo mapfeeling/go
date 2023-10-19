@@ -36,6 +36,7 @@ func maxKelements(nums []int, k int) int64 {
 		}
 	)
 	f(nums)
+
 	for i := 0; i < k; i++ {
 		ret += nums[0]
 		var dummy int
