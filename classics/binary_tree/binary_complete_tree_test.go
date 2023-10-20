@@ -12,6 +12,7 @@ type BinaryCompleteTree struct {
 }
 
 func (root *BinaryCompleteTree) Height() int {
+
 	if root == nil {
 		return 0
 	}
@@ -27,10 +28,8 @@ func (root *BinaryCompleteTree) MaxHeight() int {
 	if root == nil {
 		return 0
 	}
-	leftBinaryCompleteTreeHeight := root.LeftNode.Height()
-	rightBinaryCompleteTreeHeight := root.RightNode.Height()
 
-	return maxInt(leftBinaryCompleteTreeHeight, rightBinaryCompleteTreeHeight) + 1
+	return maxInt(root.LeftNode.MaxHeight(), root.RightNode.MaxHeight()) + 1
 }
 
 func maxInt(i, j int) int {
@@ -49,7 +48,7 @@ func (root *BinaryCompleteTree) IsBinaryCompleteTree() bool {
 	if leftBinaryCompleteTreeHeight != rightBinaryCompleteTreeHeight {
 		return false
 	}
-	return root.RightNode.IsBinaryCompleteTree() && root.RightNode.IsBinaryCompleteTree()
+	return root.LeftNode.IsBinaryCompleteTree() && root.RightNode.IsBinaryCompleteTree()
 }
 
 func TestBinaryCompleteTree(t *testing.T) {
@@ -109,14 +108,26 @@ func TestBinaryCompleteTree(t *testing.T) {
 				RightNode: nil,
 			},
 			RightNode: &BinaryCompleteTree{
-				Data:      6,
-				LeftNode:  nil,
-				RightNode: nil,
+				Data:     6,
+				LeftNode: nil,
+				RightNode: &BinaryCompleteTree{
+					Data:     8,
+					LeftNode: nil,
+					RightNode: &BinaryCompleteTree{
+						Data:     9,
+						LeftNode: nil,
+						RightNode: &BinaryCompleteTree{
+							Data:      10,
+							LeftNode:  nil,
+							RightNode: nil,
+						},
+					},
+				},
 			},
 		},
 	}
 	fmt.Println(binaryCompleteTree.IsBinaryCompleteTree())
-	fmt.Println(binaryCompleteTree.MaxHeight())
+	fmt.Println(binaryCompleteTree.MaxHeight() + 1)
 	fmt.Println(unBinaryCompleteTree.IsBinaryCompleteTree())
-	fmt.Println(unBinaryCompleteTree.MaxHeight())
+	fmt.Println(unBinaryCompleteTree.MaxHeight() + 1)
 }
