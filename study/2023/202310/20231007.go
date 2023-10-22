@@ -1,8 +1,11 @@
 package _02310
 
-import "fmt"
+import (
+	"fmt"
+	"testing"
+)
 
-func main() {
+func Test20231007(t *testing.T) {
 	s := make(map[string]int)
 	delete(s, "h")
 	fmt.Println(s["h"])

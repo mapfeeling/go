@@ -1,13 +1,16 @@
 package _02310
 
-import "fmt"
+import (
+	"fmt"
+	"testing"
+)
 
 func incr(p *int) int {
 	*p++
 	return *p
 }
 
-func main() {
+func Test20231015(t *testing.T) {
 	p := 1
 	incr(&p)
 	fmt.Println(p)

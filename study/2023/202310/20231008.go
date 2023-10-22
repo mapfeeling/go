@@ -1,8 +1,11 @@
 package _02310
 
-import "fmt"
+import (
+	"fmt"
+	"testing"
+)
 
-func main() {
+func Test20231008(t *testing.T) {
 	i := -5
 	j := +5
 	fmt.Printf("%+d %+d", i, j)

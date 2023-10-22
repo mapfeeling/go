@@ -2,12 +2,13 @@ package _02310
 
 import (
 	"fmt"
+	"testing"
 	"time"
 )
 
 // 问执行一下代码会如何？
 
-func main() {
+func Test20231017(t *testing.T) {
 	ch := make(chan struct{})
 	go fmt.Println(<-ch)
 	ch <- struct{}{}
