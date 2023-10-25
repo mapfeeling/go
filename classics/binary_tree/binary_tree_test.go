@@ -114,12 +114,7 @@ func MaxDepthBinaryTree(root *BinaryTree) int {
 	if root == nil {
 		return 0
 	}
-	leftMaxDepthBinaryTree := MaxDepthBinaryTree(root.LeftNode)
-	rightMaxDepthBinaryTree := MaxDepthBinaryTree(root.RightNode)
-	if leftMaxDepthBinaryTree > rightMaxDepthBinaryTree {
-		return leftMaxDepthBinaryTree + 1
-	}
-	return rightMaxDepthBinaryTree + 1
+	return max(MaxDepthBinaryTree(root.LeftNode), MaxDepthBinaryTree(root.RightNode)) + 1
 }
 
 // 判断一个树是否为完全二叉树
@@ -156,6 +151,44 @@ func lowestCommonAncestor(root, p, q *BinaryTree) *BinaryTree {
 	}
 
 	return right
+}
+
+func findAllContainPaths(root *BinaryTree, target int, paths []int) [][]int {
+	if root == nil {
+		return [][]int{}
+	}
+	paths = append(paths, root.Value)
+	if root.Value == target {
+		return [][]int{paths}
+	}
+	leftPaths := findAllContainPaths(root.LeftNode, target, paths)
+	rightPaths := findAllContainPaths(root.RightNode, target, paths)
+	return append(leftPaths, rightPaths...)
+}
+
+func findAllPathsList(root *BinaryTree) [][]int {
+	var res [][]int
+
+	if root == nil {
+		return res
+	}
+
+	if root.LeftNode == nil || root.RightNode == nil {
+		return [][]int{{root.Value}}
+	}
+
+	leftPaths := findAllPathsList(root.LeftNode)
+	rightPaths := findAllPathsList(root.RightNode)
+
+	paths := make([][]int, 0)
+	for _, path := range leftPaths {
+		paths = append(paths, append([]int{root.Value}, path...))
+	}
+	for _, path := range rightPaths {
+		paths = append(paths, append([]int{root.Value}, path...))
+	}
+
+	return paths
 }
 
 func dfsPathSum(root *BinaryTree, sum int, arr []int, ret *[][]int) {
@@ -222,10 +255,11 @@ func TestBinaryTree(t *testing.T) {
 		},
 	}
 
+	fmt.Println("-------------先序遍历---------------------")
 	RecursionPreOrderTraversal(root)
-	fmt.Println("----------------------------------")
+	fmt.Println("-------------中序遍历---------------------")
 	RecursionMiddleOrderTraversal(root)
-	fmt.Println("----------------------------------")
+	fmt.Println("-------------后序遍历---------------------")
 	RecursionPostOrderTraversal(root)
 	fmt.Println("-------------层次遍历---------------------")
 	LevelTraversal(root)
@@ -236,8 +270,25 @@ func TestBinaryTree(t *testing.T) {
 	IsCompleteBt(root)
 	fmt.Println("------是否为完全二叉树:-------", IsNotCompleteBt)
 	fmt.Println("-------该二叉树的最大深度:--------", MaxDepthBinaryTree(root))
-	var p, q *BinaryTree
-	lowestCommonAncestor(root, p, q)
+	// LCA
+	{
+		root := &BinaryTree{Value: 3}
+		root.LeftNode = &BinaryTree{Value: 5}
+		root.RightNode = &BinaryTree{Value: 1}
+		root.LeftNode.LeftNode = &BinaryTree{Value: 6}
+		root.LeftNode.RightNode = &BinaryTree{Value: 2}
+		root.RightNode.LeftNode = &BinaryTree{Value: 0}
+		root.RightNode.RightNode = &BinaryTree{Value: 8}
+		p, q := root.LeftNode.LeftNode, root.LeftNode.RightNode
+		fmt.Println("------LCA:-------", lowestCommonAncestor(root, p, q))
+		fmt.Println("------findAllPathsList:-------", findAllPathsList(root))
+		fmt.Println("------findAllContainPaths:-------", findAllContainPaths(root, 5, []int{}))
+	}
+	{
+
+	}
 	fmt.Println("------二叉树中和为某一值的路径:-------", pathSum(root, 20))
+	q := 1698243900
+	time.
 
 }

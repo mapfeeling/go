@@ -1,27 +1,44 @@
 package _02310
 
-import (
-	"fmt"
-	"testing"
-)
+// 下面代码输出什么？
 
-func Test20231024(t *testing.T) {
-	//下面代码如何修改可以顺利编译？
+//type A interface {
+//	ShowA() int
+//}
+//
+//type B interface {
+//	ShowB() int
+//}
+//
+//type Work struct {
+//	i int
+//}
+//
+//func (w Work) ShowA() int {
+//	return w.i + 10
+//}
+//
+//func (w Work) ShowB() int {
+//	return w.i + 20
+//}
+//
+//func Test20231024(t *testing.T) {
+//	c := Work{3}
+//	var a A = c
+//	var b B = c
+//	fmt.Println(a.ShowB())
+//	fmt.Println(b.ShowA())
+//}
 
-	//var m map[string]int        //A
-	//m["a"] = 1
-	//if v := m["b"]; v != nil {  //B
-	//	fmt.Println(v)
-	//}
+/*
+A. 23 13
+B. compilation error
+*/
 
-	m := make(map[string]int)
-	m["a"] = 1
-	if v, ok := m["b"]; ok {
-		fmt.Println(v)
-	}
-
-	/*
-		在 A 处只声明了map m ,并没有分配内存空间，不能直接赋值，需要使用 make()，都提倡使用 make() 或者字面量的方式直接初始化 map。
-		B 处，v,k := m["b"] 当 key 为 b 的元素不存在的时候，v 会返回值类型对应的零值，k 返回 false
-	*/
-}
+/*
+知识点：接口的静态类型
+a、b 具有相同的动态类型和动态值，分别是结构体 work 和 {3}；a 的静态类型是 A，b 的静态类型是 B，接口 A 不包括方法 ShowB()，接口 B 也不包括方法 ShowA()，编译报错。
+看下编译的错误
+a.ShowB undefined (type A has no field or method ShowB)
+b.ShowA undefined (type B has no field or method ShowA)
+*/
