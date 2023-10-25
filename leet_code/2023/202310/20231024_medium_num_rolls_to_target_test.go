@@ -1,22 +1,21 @@
 package main
 
 import (
-	"fmt"
 	"testing"
 )
 
-func numRollsToTarget(n int, k int, target int) int {
-	mod := int(1e9 + 7)
-
-}
+//func numRollsToTarget(n int, k int, target int) int {
+//	mod := int(1e9 + 7)
+//
+//}
 
 func TestNumRollsToTarget(t *testing.T) {
-	var (
-		n      = 2
-		k      = 30
-		target = 7
-	)
-	fmt.Println(numRollsToTarget(n, k, target))
+	//var (
+	//	n      = 2
+	//	k      = 30
+	//	target = 7
+	//)
+	//fmt.Println(numRollsToTarget(n, k, target))
 }
 
 /*
