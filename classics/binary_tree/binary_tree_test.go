@@ -288,7 +288,5 @@ func TestBinaryTree(t *testing.T) {
 
 	}
 	fmt.Println("------二叉树中和为某一值的路径:-------", pathSum(root, 20))
-	q := 1698243900
-	time.
 
 }
