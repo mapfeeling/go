@@ -1,4 +1,4 @@
-package _02310
+package main
 
 import (
 	"fmt"
