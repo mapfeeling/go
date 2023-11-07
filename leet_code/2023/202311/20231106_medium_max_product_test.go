@@ -35,6 +35,7 @@ func maxProduct(words []string) int {
 func TestMaxProduct(t *testing.T) {
 	words := []string{"abcw", "baz", "foo", "bar", "xtfn", "abcdef"}
 	fmt.Println(maxProduct(words))
+	fmt.Println(1 << 2)
 }
 
 // 给你一个字符串数组 words ,找出并返回 length(words[i]) * length(words[j]) 的最大值,并且这两个单词不含有公共字母
