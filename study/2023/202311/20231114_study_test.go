@@ -5,33 +5,59 @@ import (
 	"testing"
 )
 
-// 以下代码输出什么？
 func TestStudy20231114(t *testing.T) {
-	a := 1
-	b := 2
-	defer calc("1", a, calc("10", a, b))
-	a = 0
-	defer calc("2", a, calc("20", a, b))
-	b = 1
+	var x *struct {
+		s [][32]byte
+	}
+	// 注意这里不是定义一个结构体类型,而是定义一个结构体类型指针变量,
+	// 即 x 是一个指针,指针类型是一个匿名结构体
+	// 很显然,x 的值是 nil,因为没有初始化,可以打印证实这一点
+	fmt.Printf("%T", x)
+
+	println(len(x.s[99])) // 32
 }
 
-func calc(index string, a, b int) int {
-	ret := a + b
-	fmt.Println(index, a, b, ret)
-	return ret
-}
-
+// len的详解
+// func len(v Type) int
 /*
-10 1 2 3
-20 0 2 2
-2 0 2 2
-1 1 3 4
+内建函数 len 返回 v 的长度，这取决于具体类型：
+数组: v 中元素的数量
+数组指针: *v 中元素的数量（v 为 nil 时 panic）
+切片、map: v 中元素的数量；若 v 为nil，len(v) 即为零
+字符串: v 中字节的数量
+通道: 通道缓存中队列（未读取）元素的数量；若 v 为 nil，len(v) 即为零
 */
 
 /*
-程序执行到 main() 函数三行代码的时候，会先执行 calc() 函数的 b 参数
-即：calc("10",a,b)，输出：10 1 2 3，得到值 3，因为
-defer 定义的函数是延迟函数，故 calc("1",1,3) 会被延迟执行
-程序执行到第五行的时候，同样先执行 calc("20",a,b) 输出：20 0 2 2 得到值 2，同样将 calc("2",0,2) 延迟执行
-程序执行到末尾的时候，按照栈先进后出的方式依次执行：calc("2",0,2)，calc("1",1,3)，则就依次输出：2 0 2 2，1 1 3 4
+在规范中,有一节是关于 len 和 cap 的。有如下几个要点：
+返回结果总是 int；
+返回结果有可能是常量；
+有时对函数参数不求值，即编译期确定返回值；
 */
+
+/*
+如果 v 的类型是数组或指向数组的指针,且表达式 v 没有包含 channel 接收或（非常量）函数调,，则返回值也是一个常量
+这种情况下,不会对 v 进行求值（即编译期就能确定）
+否则返回值不是常量,且会对 v 进行求值（即得运行时确定）
+*/
+
+// 其他类似情况
+// 不会panic
+func other() {
+	var testdata *struct {
+		a *[7]int
+	}
+	for i, _ := range testdata.a {
+		fmt.Println(i)
+	}
+}
+
+// 会panic
+func otherCanPanic() {
+	var testdata *struct {
+		a *[7]int
+	}
+	for i, j := range testdata.a {
+		fmt.Println(i, j)
+	}
+}
