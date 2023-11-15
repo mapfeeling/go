@@ -23,7 +23,7 @@ func TestSuccessfulPairs(t *testing.T) {
 		success = int64(7)
 	)
 	fmt.Println(successfulPairs(spells, potions, success))
-	fmt.Println(sort.Find())
+	//fmt.Println(sort.Find())
 }
 
 /*
