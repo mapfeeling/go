@@ -5,14 +5,14 @@ import (
 	"testing"
 )
 
-var a bool = true
+var aaa bool = true
 
 // return 之后的 defer 语句会执行吗，下面这段代码输出什么？
 func TestStudy20231109(t *testing.T) {
 	defer func() {
 		fmt.Println("1")
 	}()
-	if a == true {
+	if aaa == true {
 		fmt.Println("2")
 		return
 	}
