@@ -4,11 +4,11 @@ import (
 	"testing"
 )
 
-type People interface {
+type People20231118 interface {
 	Speak(string) string
 }
 
-type Student struct{}
+type Student20231118 struct{}
 
 func (stu *Student) Speak(think string) (talk string) {
 	if think == "speak" {
