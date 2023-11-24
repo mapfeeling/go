@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"sync"
+	"testing"
 )
 
 /*
@@ -12,8 +13,8 @@ golang经典题目:
 预期输出结果:[1 2 A B 3 4 C D 5 6 e f]
 即阿拉伯数字在英文字母前面
 */
-func main() {
-	var s = "12345678ABCDefgh"
+func TestClassics2(t *testing.T) {
+	var s = "123erefasda45678ABCDefgh"
 	var (
 		resNumber []rune
 		resWord   []rune
