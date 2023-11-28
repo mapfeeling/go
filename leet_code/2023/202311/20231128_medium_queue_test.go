@@ -1,91 +1,95 @@
 package _02311
 
 import (
+	"container/list"
 	"fmt"
 	"testing"
 )
 
 type FrontMiddleBackQueue struct {
-	data []int
+	left  *list.List
+	right *list.List
 }
 
 func Constructor() FrontMiddleBackQueue {
 	return FrontMiddleBackQueue{
-		data: make([]int, 0, 2),
+		left:  list.New(),
+		right: list.New(),
 	}
 }
 
 func (this *FrontMiddleBackQueue) PushFront(val int) {
-	this.data = append([]int{val}, this.data...)
+	this.left.PushFront(val)
+	if this.left.Len() > this.right.Len() {
+		this.right.PushFront(this.left.Remove(this.left.Back()))
+	}
 }
 
 func (this *FrontMiddleBackQueue) PushMiddle(val int) {
-	middle := len(this.data) / 2
-	box := append([]int{val}, this.data[middle:]...)
-	this.data = append(this.data[:middle], box...)
+	this.left.PushBack(val)
 }
 
 func (this *FrontMiddleBackQueue) PushBack(val int) {
-	this.data = append(this.data, val)
+	this.right.Remove(this.right.Back())
+	if this.left.Len() > this.right.Len() {
+		this.right.PushFront(this.left.Remove(this.left.Back()))
+	}
 }
 
 func (this *FrontMiddleBackQueue) PopFront() int {
-	if len(this.data) == 0 {
+	if this.left.Len()+this.right.Len() == 0 {
 		return -1
 	}
-	ans := this.data[0]
-	this.data = this.data[1:]
-	return ans
+	ans := this.left.Remove(this.left.Front())
+	if this.left.Len()+2 == this.left.Len() {
+		this.left.PushBack(this.right.Remove(this.right.Front()))
+	}
+	return ans.(int)
 }
 
 func (this *FrontMiddleBackQueue) PopMiddle() int {
-	n := len(this.data)
-	if n == 0 {
+	if this.left.Len()+this.right.Len() == 0 {
 		return -1
 	}
-	var middle int
-	if n%2 == 1 {
-		middle = n / 2
-	} else {
-		middle = n/2 - 1
+	ans := this.left.Remove(this.left.Back())
+	if this.left.Len()+2 == this.left.Len() {
+		this.left.PushBack(this.right.Remove(this.right.Front()))
 	}
-
-	ans := this.data[middle]
-	this.data = append(this.data[:middle], this.data[middle+1:]...)
-	return ans
+	return ans.(int)
 }
 
 func (this *FrontMiddleBackQueue) PopBack() int {
-	n := len(this.data)
-	if n == 0 {
+	if this.left.Len()+this.right.Len() == 0 {
 		return -1
 	}
-	ans := this.data[n-1]
-	this.data = this.data[:n-1]
-	return ans
+	ans := this.right.Remove(this.right.Back())
+	if this.left.Len() > this.right.Len() {
+		this.right.PushBack(this.left.Remove(this.left.Back()))
+	}
+	return ans.(int)
 }
 
 func TestFrontMiddleBackQueue(t *testing.T) {
 	q := Constructor()
-	fmt.Println("1", q.data)
+	fmt.Println("1", q.left, q.right)
 	q.PushFront(1) // [1]
-	fmt.Println("2", q.data)
+	fmt.Println("2", q.left, q.right)
 	q.PushBack(2) // [1, 2]
-	fmt.Println("3", q.data)
+	fmt.Println("3", q.left, q.right)
 	q.PushMiddle(3) // [1, 3, 2]
-	fmt.Println("4", q.data)
+	fmt.Println("4", q.left, q.right)
 	q.PushMiddle(4) // [1, 4, 3, 2]
-	fmt.Println("5", q.data)
+	fmt.Println("5", q.left, q.right)
 	q.PopFront() // 返回 1 -> [4, 3, 2]
-	fmt.Println("6", q.data)
+	fmt.Println("6", q.left, q.right)
 	q.PopMiddle() // 返回 3 -> [4, 2]
-	fmt.Println("7", q.data)
+	fmt.Println("7", q.left, q.right)
 	q.PopMiddle() // 返回 4 -> [2]
-	fmt.Println("8", q.data)
+	fmt.Println("8", q.left, q.right)
 	q.PopBack() // 返回 2 -> []
-	fmt.Println("9", q.data)
+	fmt.Println("9", q.left, q.right)
 	q.PopBack() // 返回 -1 -> [] （队列为空）
-	fmt.Println("10", q.data)
+	fmt.Println("10", q.left, q.right)
 }
 
 /**

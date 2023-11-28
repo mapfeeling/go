@@ -2,6 +2,7 @@ package main
 
 import (
 	"sync"
+	"testing"
 )
 
 // 以下代码运行有什么问题
@@ -10,7 +11,7 @@ const N = 10
 
 var wg = &sync.WaitGroup{}
 
-func main() {
+func TestStudy20230925(t *testing.T) {
 	for i := 0; i < N; i++ {
 		go func(i int) {
 			wg.Add(1)

@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"testing"
+)
 
 func SliceRise(s []int) {
 	s = append(s, 0)
@@ -9,13 +12,14 @@ func SliceRise(s []int) {
 	}
 }
 
-func main() {
+func TestStudy20230928(t *testing.T) {
 	s1 := []int{1, 2}
 	s2 := s1
 	s2 = append(s2, 3)
 	SliceRise(s1)
 	SliceRise(s2)
-	fmt.Println(s1, s2)
+	fmt.Println(s1)
+	fmt.Println(s2)
 }
 
 // 打印结果

@@ -3,10 +3,11 @@ package main
 
 import (
 	"fmt"
+	"testing"
 	"time"
 )
 
-func main() {
+func TestStudy20230924(t *testing.T) {
 	ch := make(chan int, 1000)
 	go func() {
 		for i := 0; i < 10; i++ {

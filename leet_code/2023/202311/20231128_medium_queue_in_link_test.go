@@ -62,25 +62,25 @@ func (this *FrontMiddleBackQueueInLink) PopBack() int {
 
 func TestFrontMiddleBackQueueInLink(t *testing.T) {
 	q := Constructor()
-	fmt.Println("1", q.data)
+	fmt.Println("1", q.left, q.right)
 	q.PushFront(1) // [1]
-	fmt.Println("2", q.data)
+	fmt.Println("2", q.left, q.right)
 	q.PushBack(2) // [1, 2]
-	fmt.Println("3", q.data)
+	fmt.Println("3", q.left, q.right)
 	q.PushMiddle(3) // [1, 3, 2]
-	fmt.Println("4", q.data)
+	fmt.Println("4", q.left, q.right)
 	q.PushMiddle(4) // [1, 4, 3, 2]
-	fmt.Println("5", q.data)
+	fmt.Println("5", q.left, q.right)
 	q.PopFront() // 返回 1 -> [4, 3, 2]
-	fmt.Println("6", q.data)
+	fmt.Println("6", q.left, q.right)
 	q.PopMiddle() // 返回 3 -> [4, 2]
-	fmt.Println("7", q.data)
+	fmt.Println("7", q.left, q.right)
 	q.PopMiddle() // 返回 4 -> [2]
-	fmt.Println("8", q.data)
+	fmt.Println("8", q.left, q.right)
 	q.PopBack() // 返回 2 -> []
-	fmt.Println("9", q.data)
+	fmt.Println("9", q.left, q.right)
 	q.PopBack() // 返回 -1 -> [] （队列为空）
-	fmt.Println("10", q.data)
+	fmt.Println("10", q.left, q.right)
 }
 
 /**
