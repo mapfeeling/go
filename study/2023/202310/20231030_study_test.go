@@ -15,7 +15,7 @@ func f2() (r int) {
 		t = t + 5
 	}()
 	return t
-}
+} // 1、 r=5 2、t=10 3、r=5
 
 func f3() (r int) {
 	defer func(r int) {

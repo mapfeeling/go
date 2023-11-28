@@ -7,7 +7,7 @@ type NumArray struct {
 	tree []int
 }
 
-func Constructor(nums []int) NumArray {
+func ConstructorNumArray(nums []int) NumArray {
 	n := len(nums)
 	tree := make([]int, n<<1)
 	for i := n; i < n<<1; i++ {
