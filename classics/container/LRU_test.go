@@ -1,4 +1,4 @@
-package classics
+package container
 
 import (
 	"container/list"
