@@ -63,6 +63,8 @@ type BlockNew struct {
 }
 
 func Test20240220(t *testing.T) {
+	fmt.Println(int64(2<<(24-1) + 2>>1))
+	fmt.Println(int64(2<<(24-1) + 2<<(0)))
 	qq()
 	a()
 	c()
