@@ -7,8 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"testing"
-
-	sentinel2 "git.n.xiaomi.com/mitv-media/dragonlib.go/sentinel"
+	//sentinel2 "git.n.xiaomi.com/mitv-media/dragonlib.go/sentinel"
 )
 
 func ZeroPadding(ciphertext []byte, blockSize int) []byte {
@@ -112,16 +111,16 @@ func Test20240109(t *testing.T) {
 	////}
 }
 
-func b() {
-	//模拟流量
-	for i := 0; i < 12; i++ {
-		var restySentinelClient = new(sentinel2.RestySentinelClient)
-		r := restySentinelClient.SetSentinelParams("some-test", "some-test", "some-test").HttpSentinelCheck().CheckAndRelease()
-		if r == nil {
-			fmt.Println("restySentinelClient == nil")
-		} else {
-			fmt.Println(r.Err, r.SentinelBlockError)
-		}
-
-	}
-}
+//func b() {
+//	//模拟流量
+//	for i := 0; i < 12; i++ {
+//		var restySentinelClient = new(sentinel2.RestySentinelClient)
+//		r := restySentinelClient.SetSentinelParams("some-test", "some-test", "some-test").HttpSentinelCheck().CheckAndRelease()
+//		if r == nil {
+//			fmt.Println("restySentinelClient == nil")
+//		} else {
+//			fmt.Println(r.Err, r.SentinelBlockError)
+//		}
+//
+//	}
+//}
